@@ -30,5 +30,30 @@
     console.log(event)
     b()
   })
-```
+  ```
   
+## Promise
+
+Callback 지옥 해결
+```js
+function a(callback) {
+  setTimeout(() => {
+    console.log('A')
+    callback()
+  }, 1000)
+}
+function b(callback) {
+  setTimeout(() => {
+    console.log('B')
+    callback()
+  }, 1000)
+}
+// Problem : Callback 지옥
+// Solve : Promise 객체
+a(function () {
+  // b() = undefined -> function
+  b(function () {
+    console.log('Done!')
+  }) 
+})
+```
