@@ -34,7 +34,10 @@
   
 ## Promise
 
-Callback 지옥 해결
+setTimeout과 같이 Network 통신을 기다리거나 순서를 보장해줘야 할 때   
+Promise(다음 순서 약속) Resolve(실행 위치)
+
+- Callback 지옥 
 ```js
 function a(callback) {
   setTimeout(() => {
@@ -56,4 +59,63 @@ a(function () {
     console.log('Done!')
   }) 
 })
+```
+
+- 해결 : Promise
+```js
+// function a(callback) {
+//   setTimeout(() => {
+//     console.log('A')
+//     callback()
+//   }, 1000)
+// }
+
+// callback = resolve
+// 실행을 보장하고 싶은 위치에서 사용
+function a() {
+  // promise: 약속의 객체!
+  return new Promise(function (resolve) {
+    setTimeout(function () {
+      console.log('A')
+      resolve('Hello A')
+    }, 1000)
+  })
+}
+function b() {
+  // promise: 약속의 객체!
+  return new Promise(function (resolve) {
+    setTimeout(function () {
+      console.log('B')
+      resolve('Hello B')
+    }, 1000)
+  })
+}
+function c() {
+  // promise: 약속의 객체!
+  return new Promise(function (resolve) {
+    setTimeout(function () {
+      console.log('C')
+      resolve('Hello C')
+    }, 1000)
+  })
+}
+function d() {
+  // promise: 약속의 객체!
+  return new Promise(function (resolve) {
+    setTimeout(function () {
+      console.log('D')
+      resolve('Hello D')
+    }, 1000)
+  })
+}
+
+// callback 지옥 해결
+async function test() {
+  await a()
+  await b()
+  await c()
+  await d()
+  console.log('Done!')
+}
+test()
 ```
