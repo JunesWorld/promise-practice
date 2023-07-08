@@ -10,5 +10,25 @@
 
 - async
 - await
-- callback
-  - 함수의 인수로 사용하는 또 다른 함수
+- callback : 함수의 인수로 사용하는 또 다른 함수
+  ```js
+  function a(callback) {
+  const str = 'Hello A'
+  // 1초 뒤에 동작
+  setTimeout(() => {
+    console.log('A')
+    callback(str)
+  }, 1000)
+  }
+  function b() {
+    console.log('B')
+  }
+  // 비동기 방식
+  // callback 함수 : 하나의 데이터처럼 활용되는 함수
+  a(function(event) {
+    // str -> callback -> event / Hello A
+    console.log(event)
+    b()
+  })
+```
+  
