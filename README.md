@@ -34,8 +34,10 @@
   
 ## Promise
 
+객체는 비동기 작업이 맞이할 미래의 완료 또는 실패와 그 결과 값을 나타냅니다.  
+
 setTimeout과 같이 Network 통신을 기다리거나 순서를 보장해줘야 할 때   
-Promise(다음 순서 약속) Resolve(실행 위치)
+Promise(다음 순서 약속) | Resolve(실행 위치)
 
 - Callback 지옥 
 ```js
@@ -119,3 +121,169 @@ async function test() {
 }
 test()
 ```
+
+## 메서드
+
+- then
+  ```js
+  function a() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      console.log('A')
+      resolve()
+    }, 1000)
+  })
+  }
+  // async function test() {
+  //   await a()
+  //   console.log('B')
+  // }
+  
+  // function test() {
+  //   const promise = a()
+  //   promise.then(() => {
+  //     console.log('B')
+  //   })
+  // }
+  
+  function test() {
+    a().then(() => {
+      console.log('B')
+    })
+  }
+  test()
+  ```
+  ```js
+  function a() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      console.log('A')
+      resolve()
+    }, 1000)
+  })
+  }
+  function b() {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        console.log('B')
+        resolve()
+      }, 1000)
+    })
+  }
+  function c() {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        console.log('C')
+        resolve()
+      }, 1000)
+    })
+  }
+  function d() {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        console.log('D')
+        resolve()
+      }, 1000)
+    })
+  }
+  // function test() {
+  //   a.then(() => {
+  //     b().then(() => {
+  //       c().then(() => {
+  //         d().then(() => {
+  //           console.log('Done!')
+  //         })
+  //       })
+  //     })
+  //   })
+  // }
+  
+  // function test() {
+  //   a().then(() => {
+  //     return b()
+  //   }).then(() => {
+  //     return c()
+  //   }).then(() => {
+  //     return d()
+  //   }).then(() => {
+  //     console.log('Done!')
+  //   })
+  // }
+  
+  function test() {
+    a()
+      .then(() => b())
+      .then(() => c())
+      .then(() => d())
+      .then(() => {
+        console.log('Done!')
+      })
+  }
+  test()
+  ```
+- catch & finally
+  ```js
+  function a(number) {
+  return new Promise((resolve, reject) => {
+    if (number > 4) {
+      reject()
+      return // A 출력 X
+    }
+    setTimeout(() => {
+      console.log('A')
+      resolve()
+    }, 1000)
+  })
+  }
+  function test() {
+    a(5)
+      .then(() => {
+        console.log('Resolve!')
+      })
+      .catch(() => {
+        console.log('Reject!')
+      })
+      .finally(() => {
+        console.log('Done!')
+      })
+  }
+  test()
+  ```
+  ```js
+  function a(number) {
+  return new Promise((resolve, reject) => {
+    if (number > 4) {
+      reject()
+      return // A 출력 X
+    }
+    setTimeout(() => {
+      console.log('A')
+      resolve()
+    }, 1000)
+  })
+  }
+  // function test() {
+  //   a(5)
+  //     .then(() => {
+  //       console.log('Resolve!')
+  //     })
+  //     .catch(() => {
+  //       console.log('Reject!')
+  //     })
+  //     .finally(() => {
+  //       console.log('Done!')
+  //     })
+  // }
+  
+  async function test() {
+    try {
+      await a(1)
+      console.log('Resolve!')
+    } catch (error) {
+      console.log('Reject!')
+    } finally {
+      console.log('Done!')
+    }
+  }
+  test()
+  ```
