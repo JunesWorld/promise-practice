@@ -34,8 +34,10 @@
   
 ## Promise
 
+객체는 비동기 작업이 맞이할 미래의 완료 또는 실패와 그 결과 값을 나타냅니다.  
+
 setTimeout과 같이 Network 통신을 기다리거나 순서를 보장해줘야 할 때   
-Promise(다음 순서 약속) Resolve(실행 위치)
+Promise(다음 순서 약속) | Resolve(실행 위치)
 
 - Callback 지옥 
 ```js
