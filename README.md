@@ -121,3 +121,37 @@ async function test() {
 }
 test()
 ```
+
+## 메서드
+
+- then
+  ```js
+  function a() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      console.log('A')
+      resolve()
+    }, 1000)
+  })
+  }
+  // async function test() {
+  //   await a()
+  //   console.log('B')
+  // }
+  
+  // function test() {
+  //   const promise = a()
+  //   promise.then(() => {
+  //     console.log('B')
+  //   })
+  // }
+  
+  function test() {
+    a().then(() => {
+      console.log('B')
+    })
+  }
+  test()
+  ```
+- catch
+- finally
